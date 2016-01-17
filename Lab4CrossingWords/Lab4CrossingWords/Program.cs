@@ -1,52 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab4CrossingWords
 {
-    public class Word
-    {
-        public int Number { get; set; }
-        public string Text { get; set; }
-
-        public Word(int n, string text)
-        {
-            Number = n;
-            Text = text;
-        }
-    }
-
-    
-
-    public class CrossPointInfo
-    {
-        public int Word1Number { get; set; }
-        public int Word2Number { get; set; }
-
-        public char Letter { get; set; }
-
-        public int W1Pos { get; set; }
-        public int W2Pos { get; set; }
-
-        public bool IsSameWordsCross(CrossPointInfo toCheck)
-        {
-            return (Word1Number == toCheck.Word1Number && Word2Number == toCheck.Word2Number);
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0} {1}", Word1Number, Word2Number );
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
-
             var wordsList = new List<Word>();
             wordsList.Add (new Word(1, "художник"));
             wordsList.Add(new Word(2, "кисть"));
@@ -64,6 +24,30 @@ namespace Lab4CrossingWords
                 Console.WriteLine(crossPointInfo.ToString()); 
             }
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            var r2 = DifferecntCross(res);
+
+            foreach (var crossPointInfo in r2)
+            {
+                Console.WriteLine(crossPointInfo.ToString());
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+
+
+
+            Console.WriteLine(r2.Count);
+
+            if (r2.Count < 7 - 1)
+            {
+                Console.WriteLine("Can't build");
+            }
+            else
+            {
+                // go to deeper check
+            }
+
+        
 
             Console.Read();
         }
@@ -109,17 +93,36 @@ namespace Lab4CrossingWords
             return result;
         }
 
-        public static int DifferecntCross(List<CrossPointInfo> crossPointInfos)
+        public static List<CrossPointInfo> DifferecntCross(List<CrossPointInfo> crossPointInfos)
         {
             var differecntCross = 0;
-           
 
+            List < CrossPointInfo > unicCrossPointInfos = new List<CrossPointInfo>();
             foreach (var crossPointInfo in crossPointInfos)
             {
-           //     crossPointInfo.
+                
+                if (unicCrossPointInfos.Count == 0)
+                {
+                    unicCrossPointInfos.Add(crossPointInfo);
+                }
+                var needAdd = true;
+                foreach (var unicCrossPointInfo in unicCrossPointInfos)
+                {
+                    if (crossPointInfo.IsSameWordsCross(unicCrossPointInfo))
+                    {
+                        needAdd = false;
+                        break;
+                    }
+                }
+
+                if (needAdd)
+                {
+                    unicCrossPointInfos.Add(crossPointInfo);
+                }
+                
             }
 
-            return differecntCross;
+            return unicCrossPointInfos;
         }
     }
 }
