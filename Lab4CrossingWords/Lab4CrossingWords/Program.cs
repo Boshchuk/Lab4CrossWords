@@ -7,28 +7,30 @@ namespace Lab4CrossingWords
     {
         static void Main(string[] args)
         {
-            var wordsList = new List<Word>();
-            wordsList.Add (new Word(1, "художник"));
-            wordsList.Add(new Word(2, "кисть"));
-            wordsList.Add(new Word(3, "мастер"));
-            wordsList.Add(new Word(4, "студия"));
-            wordsList.Add(new Word(5, "пейзаж"));
-            wordsList.Add(new Word(6, "палитра"));
-            wordsList.Add(new Word(7, "мольберт"));
+            var wordsList = new List<Word>
+            {
+                new Word(1, "художник"),
+                new Word(2, "кисть"),
+                new Word(3, "мастер"),
+                new Word(4, "студия"),
+                new Word(5, "пейзаж"),
+                new Word(6, "палитра"),
+                new Word(7, "мольберт")
+            };
 
 
-            List<CrossPointInfo> res = GetCrossPointInfos(wordsList);
+            List<CrossPointInfo> crossPointInfos = GetCrossPointInfos(wordsList);
 
-            foreach (var crossPointInfo in res)
+            foreach (var crossPointInfo in crossPointInfos)
             {
                 Console.WriteLine(crossPointInfo.ToString()); 
             }
 
             Console.ForegroundColor = ConsoleColor.Blue;
 
-            var r2 = DifferecntCross(res);
+            List<CrossPointInfo> differecntCross = DifferentCross(crossPointInfos);
 
-            foreach (var crossPointInfo in r2)
+            foreach (var crossPointInfo in differecntCross)
             {
                 Console.WriteLine(crossPointInfo.ToString());
             }
@@ -36,9 +38,9 @@ namespace Lab4CrossingWords
 
 
 
-            Console.WriteLine(r2.Count);
+            Console.WriteLine(differecntCross.Count);
 
-            if (r2.Count < 7 - 1)
+            if (differecntCross.Count < 7 - 1)
             {
                 Console.WriteLine("Can't build");
             }
@@ -93,7 +95,7 @@ namespace Lab4CrossingWords
             return result;
         }
 
-        public static List<CrossPointInfo> DifferecntCross(List<CrossPointInfo> crossPointInfos)
+        public static List<CrossPointInfo> DifferentCross(List<CrossPointInfo> crossPointInfos)
         {
             var differecntCross = 0;
 

@@ -17,7 +17,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", Word1Number, Word2Number);
+            return $"{Word1Number} {Word2Number}";
         }
     }
 }

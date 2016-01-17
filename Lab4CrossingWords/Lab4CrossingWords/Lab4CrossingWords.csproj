@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CrossPointInfo.cs" />
     <Compile Include="CrossWordsField.cs" />
+    <Compile Include="InternalChar.cs" />
     <Compile Include="PlaceDirection.cs" />
     <Compile Include="PlacedWord.cs" />
     <Compile Include="Program.cs" />
