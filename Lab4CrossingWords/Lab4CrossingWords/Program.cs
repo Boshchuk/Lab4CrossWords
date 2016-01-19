@@ -95,6 +95,38 @@ namespace Lab4CrossingWords
             return result;
         }
 
+        public static List<CrossPointInfo> GetRelatedForFirstWord(List<CrossPointInfo> crossPointInfos)
+        {
+            var differecntCross = 0;
+
+            List<CrossPointInfo> unicCrossPointInfos = new List<CrossPointInfo>();
+            foreach (var crossPointInfo in crossPointInfos)
+            {
+
+                if (unicCrossPointInfos.Count == 0)
+                {
+                    unicCrossPointInfos.Add(crossPointInfo);
+                }
+                var needAdd = true;
+                foreach (var unicCrossPointInfo in unicCrossPointInfos)
+                {
+                    if (crossPointInfo.IsSameWordsCross(unicCrossPointInfo))
+                    {
+                        needAdd = false;
+                        break;
+                    }
+                }
+
+                if (needAdd)
+                {
+                    unicCrossPointInfos.Add(crossPointInfo);
+                }
+
+            }
+
+            return unicCrossPointInfos;
+        }
+
         public static List<CrossPointInfo> DifferentCross(List<CrossPointInfo> crossPointInfos)
         {
             var differecntCross = 0;

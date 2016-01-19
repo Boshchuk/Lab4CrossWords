@@ -43,8 +43,8 @@ namespace Lab4CrossingWords
             switch (direction)
             {
                 case PlaceDirection.Horisontal:
-                {
-                       for (int index = 0; index < word.Text.Length; index++)
+                    {
+                        for (int index = 0; index < word.Text.Length; index++)
                         {
                             var c = word.Text[index];
                             var internalChar = InternalMatrix[pointToPlace.X + index, pointToPlace.Y];
@@ -59,10 +59,10 @@ namespace Lab4CrossingWords
                             }
                         }
                         break;
-                }
+                    }
 
                 case PlaceDirection.Vertiacal:
-                {
+                    {
                         for (int index = 0; index < word.Text.Length; index++)
                         {
                             var c = word.Text[index];
@@ -78,12 +78,12 @@ namespace Lab4CrossingWords
                             }
                         }
                         break;
-                        
-                }
+
+                    }
             }
 
 
-            
+
 
             return result;
         }
@@ -92,39 +92,30 @@ namespace Lab4CrossingWords
         {
             while (PlacedWords.Count != _wordsToInsert)
             {
-                
+                for (int index = 0; index < words.Count; index++)
+                {
+                    //InsertWord(words[index],);
+                }
             }
         }
 
         private void InsertWordHorisontal(Word word, Point point)
         {
-            for (int i = 0; i < DimX; i++)
+            for (int index = 0; index < word.Text.Length; index++)
             {
-                for (int j = 0; j < DimY; j++)
-                {
-                    for (int index = 0; index < word.Text.Length; index++)
-                    {
-                        var c = word.Text[index];
-                        InternalMatrix[point.X + index, point.Y].Symbol = c;
-                        InternalMatrix[point.X + index, point.Y].PlacedCount++;
-                    }
-                }
+                var c = word.Text[index];
+                InternalMatrix[point.X + index, point.Y].Symbol = c;
+                InternalMatrix[point.X + index, point.Y].PlacedCount++;
             }
         }
 
         private void InsertWordVertical(Word word, Point point)
         {
-            for (int i = 0; i < DimX; i++)
+            for (int index = 0; index < word.Text.Length; index++)
             {
-                for (int j = 0; j < DimY; j++)
-                {
-                    for (int index = 0; index < word.Text.Length; index++)
-                    {
-                        var c = word.Text[index];
-                        InternalMatrix[point.X, point.Y +index].Symbol = c;
-                        InternalMatrix[point.X, point.Y +index].PlacedCount++;
-                    }
-                }
+                var c = word.Text[index];
+                InternalMatrix[point.X, point.Y + index].Symbol = c;
+                InternalMatrix[point.X, point.Y + index].PlacedCount++;
             }
         }
 
@@ -150,24 +141,56 @@ namespace Lab4CrossingWords
             // TODO: determenate Direction
             switch (placedWord.PlaceDirection)
             {
-                 case PlaceDirection.Horisontal:
-                {
-                    InsertWordHorisontal(word, placedWord.StartPoint);
-                    break;
-                }
+                case PlaceDirection.Horisontal:
+                    {
+                        InsertWordHorisontal(word, placedWord.StartPoint);
+                        break;
+                    }
                 case PlaceDirection.Vertiacal:
-                {
-                    InsertWordVertical(word, placedWord.StartPoint);
-                    break;
-                }
+                    {
+                        InsertWordVertical(word, placedWord.StartPoint);
+                        break;
+                    }
             }
 
             PlacedWords.Push(placedWord);
         }
 
-        public void RemoveWord(Word word)
+        public void RemoveLastWord()
         {
-            
+            var placedWord = PlacedWords.Pop();
+
+            switch (placedWord.PlaceDirection)
+            {
+                case PlaceDirection.Horisontal:
+                    {
+                        for (var index = 0; index < placedWord.Word.Text.Length; index++)
+                        {
+                            InternalMatrix[placedWord.StartPoint.X + index, placedWord.StartPoint.Y].PlacedCount--;
+
+                            if (InternalMatrix[placedWord.StartPoint.X + index, placedWord.StartPoint.Y].PlacedCount == 0)
+                            {
+                                InternalMatrix[placedWord.StartPoint.X + index, placedWord.StartPoint.Y].Symbol = DefSymbol;
+                            }
+                        }
+
+                        break;
+                    }
+                case PlaceDirection.Vertiacal:
+                    {
+                        for (var index = 0; index < placedWord.Word.Text.Length; index++)
+                        {
+                            InternalMatrix[placedWord.StartPoint.X , placedWord.StartPoint.Y + index].PlacedCount--;
+
+                            if (InternalMatrix[placedWord.StartPoint.X, placedWord.StartPoint.Y + index].PlacedCount == 0)
+                            {
+                                InternalMatrix[placedWord.StartPoint.X, placedWord.StartPoint.Y + index].Symbol = DefSymbol;
+                            }
+                        }
+
+                        break;
+                    }
+            }
         }
     }
 }
