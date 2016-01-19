@@ -1,4 +1,6 @@
-﻿namespace Lab4CrossingWords
+﻿using System;
+
+namespace Lab4CrossingWords
 {
     public class CrossPointInfo
     {
@@ -19,5 +21,42 @@
         {
             return $"{Word1Number} {Word2Number}";
         }
+
+
+        public int GetThisCross(int firstKey)
+        {
+            if (firstKey == Word1Number)
+            {
+                return W1Pos;
+            }
+
+            if (firstKey == Word2Number)
+            {
+                return W2Pos;
+            }
+
+            throw new ArgumentException();
+        }
+
+        
+
+
+
+
+        public int GetPairedCrossNum(int oneOfPairNum)
+        {
+            if (oneOfPairNum == Word1Number)
+            {
+                return Word2Number;
+            }
+
+            if (oneOfPairNum == Word2Number)
+            {
+                return Word1Number;
+            }
+
+            throw new ArgumentException();
+        }
+
     }
 }

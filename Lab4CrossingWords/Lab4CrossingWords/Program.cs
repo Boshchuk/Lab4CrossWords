@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lab4CrossingWords
 {
@@ -18,13 +19,43 @@ namespace Lab4CrossingWords
                 new Word(7, "мольберт")
             };
 
-
+            // raw cross posint infos
             List<CrossPointInfo> crossPointInfos = GetCrossPointInfos(wordsList);
 
             foreach (var crossPointInfo in crossPointInfos)
             {
                 Console.WriteLine(crossPointInfo.ToString()); 
             }
+            // end
+
+
+            // for words avalible crossong calc
+            var nList = wordsList.Select(x => x.Number);
+
+            Dictionary<int, List<CrossPointInfo>> dick = new Dictionary<int, List<CrossPointInfo>>();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            foreach (var key in nList)
+            {
+                var res = GetRelatedForWord(key, crossPointInfos);
+
+
+                dick.Add(key, res);
+
+
+                foreach (var crossPointInfo in res)
+                {
+                    Console.WriteLine(crossPointInfo.ToString());
+                }
+
+                Console.WriteLine();
+            }
+
+
+            // end calc and display
+            
 
             Console.ForegroundColor = ConsoleColor.Blue;
 
@@ -95,20 +126,20 @@ namespace Lab4CrossingWords
             return result;
         }
 
-        public static List<CrossPointInfo> GetRelatedForFirstWord(List<CrossPointInfo> crossPointInfos)
+        public static List<CrossPointInfo> GetRelatedForWord(int wordKey, List<CrossPointInfo> crossPointInfos)
         {
             var differecntCross = 0;
 
-            List<CrossPointInfo> unicCrossPointInfos = new List<CrossPointInfo>();
-            foreach (var crossPointInfo in crossPointInfos)
+            List<CrossPointInfo> infos = new List<CrossPointInfo>();
+            foreach (var crossPointInfo in crossPointInfos.Where(x=>x.Word1Number == wordKey || x.Word2Number == wordKey ))
             {
 
-                if (unicCrossPointInfos.Count == 0)
+                if (infos.Count == 0)
                 {
-                    unicCrossPointInfos.Add(crossPointInfo);
+                    infos.Add(crossPointInfo);
                 }
                 var needAdd = true;
-                foreach (var unicCrossPointInfo in unicCrossPointInfos)
+                foreach (var unicCrossPointInfo in infos)
                 {
                     if (crossPointInfo.IsSameWordsCross(unicCrossPointInfo))
                     {
@@ -119,12 +150,12 @@ namespace Lab4CrossingWords
 
                 if (needAdd)
                 {
-                    unicCrossPointInfos.Add(crossPointInfo);
+                    infos.Add(crossPointInfo);
                 }
 
             }
 
-            return unicCrossPointInfos;
+            return infos;
         }
 
         public static List<CrossPointInfo> DifferentCross(List<CrossPointInfo> crossPointInfos)
