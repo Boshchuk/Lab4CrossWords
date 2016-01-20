@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Policy;
 
 namespace Lab4CrossingWords
 {
@@ -41,15 +38,35 @@ namespace Lab4CrossingWords
             }
         }
 
-
-
-
-        public bool CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
+        public void DrawMatrix()
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            for (int i = 0; i < DimX; i++)
+            {
+                
+                for (int j = 0; j < DimY; j++)
+                {
+                    var internalChar = InternalMatrix[i, j];
 
-            // var 
+                    if (internalChar.Symbol != DefSymbol)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        
+                    }
+                    if (internalChar.PlacedCount > 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
 
+                    Console.Write("{0}",internalChar.Symbol );
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+                Console.WriteLine();
+            }
+        }
 
+        public Point CulcStartPoint(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
+        {
             Point pointToPlace = new Point();
 
             Point crossPoint = new Point();
@@ -85,6 +102,15 @@ namespace Lab4CrossingWords
                         break;
                     }
             }
+            return pointToPlace;
+        }
+
+        public bool CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
+        {
+
+            // var 
+            var pointToPlace = CulcStartPoint(placedWord, info, direction, word);
+
 
             var result = true;
             switch (direction)
@@ -129,68 +155,80 @@ namespace Lab4CrossingWords
                     }
             }
 
-
-
-
             return result;
         }
 
-        public void ProcessWords(List<Word> words, Dictionary<int, List<CrossPointInfo>> dictionary)
+        public bool ProcessWords(List<Word> words, Dictionary<int, List<CrossPointInfo>> dictionary)
         {
             if (words.Count == 0)
             {
                 Console.WriteLine("all placed");
+                return true;
             }
 
             var wordToPlace = words.First();
 
             if (PlacedWords.Count == 0)
             {
-                InsertWord(wordToPlace, PlaceDirection.Horisontal, null);
+                InsertWord(wordToPlace, PlaceDirection.Horisontal, new Point(50,50));
 
                 var minusOne = words.Remove(wordToPlace);
-                ProcessWords(words, dictionary);
+                return ProcessWords(words, dictionary);
             }
             else
             {
+                var canPlace = false;
+
                 var relatedInfos = dictionary[wordToPlace.Number];
 
-                CrossPointInfo attemptPlace = relatedInfos.First(x => x.Word1Number == wordToPlace.Number || x.Word2Number == wordToPlace.Number);
+                CrossPointInfo attemptPlace = relatedInfos.FirstOrDefault(x => x.Word1Number == wordToPlace.Number || x.Word2Number == wordToPlace.Number);
 
-                var idOfWordToConnect = attemptPlace.GetPairedCrossNum(wordToPlace.Number);
-
-                PlacedWord placedToConnect = PlacedWords.First(x => x.Word.Number == idOfWordToConnect);
-
-                PlaceDirection dir = PlaceDirection.Horisontal;
-
-                switch (placedToConnect.PlaceDirection)
+                if (attemptPlace != null)
                 {
-                    case PlaceDirection.Horisontal:
-                        {
-                            dir = PlaceDirection.Vertiacal;
-                            break;
-                        }
-                    case PlaceDirection.Vertiacal:
-                        {
-                            dir = PlaceDirection.Horisontal;
-                            break;
-                        }
-                }
+                    var idOfWordToConnect = attemptPlace.GetPairedCrossNum(wordToPlace.Number);
 
-                if (CanPlaceWord(placedToConnect, attemptPlace, dir, wordToPlace))
-                {
-                    InsertWord(wordToPlace, dir, attemptPlace);
+                    PlacedWord placedToConnect = PlacedWords.FirstOrDefault(x => x.Word.Number == idOfWordToConnect);
 
-                    var minusOne = words.Remove(wordToPlace);
-                    
+                    if (placedToConnect != null)
+                    {
+                        PlaceDirection dir = PlaceDirection.Horisontal;
+
+                        switch (placedToConnect.PlaceDirection)
+                        {
+                            case PlaceDirection.Horisontal:
+                                {
+                                    dir = PlaceDirection.Vertiacal;
+                                    break;
+                                }
+                            case PlaceDirection.Vertiacal:
+                                {
+                                    dir = PlaceDirection.Horisontal;
+                                    break;
+                                }
+                        }
+                        if (CanPlaceWord(placedToConnect, attemptPlace, dir, wordToPlace))
+                        {
+                            canPlace = true;
+                            var startPoint = CulcStartPoint(placedToConnect, attemptPlace, dir, wordToPlace);
+                            InsertWord(wordToPlace, dir, startPoint);
+
+                            var minusOne = words.Remove(wordToPlace);
+                        }
+                    }
+
                 }
                 else
+                {
+                    return false;
+                }
+
+                if (!canPlace)
                 {
                     dictionary[wordToPlace.Number].Remove(attemptPlace);
                     words.Remove(wordToPlace);
                     words.Add(wordToPlace);
                 }
-                ProcessWords(words, dictionary);
+                return ProcessWords(words, dictionary);
             }
 
         }
@@ -215,42 +253,32 @@ namespace Lab4CrossingWords
             }
         }
 
-        public void InsertWord(Word word, PlaceDirection direction, CrossPointInfo crossPointInfo)
+        public void InsertWord(Word word, PlaceDirection direction, Point startPoint)
         {
-            var placedWord = new PlacedWord
+            var item = new PlacedWord
             {
-                Word = word
+                Word = word,
+                StartPoint = startPoint,
+                PlaceDirection = direction
             };
 
-            if (PlacedWords.Count == 0)
-            {
-                // inserting the first-first
-                placedWord.StartPoint = new Point(50, 50);
-                placedWord.PlaceDirection = PlaceDirection.Horisontal;
-            }
-            else
-            {
-                placedWord.PlaceDirection = direction;
-            }
-
-
             // TODO: determenate Direction
-            switch (placedWord.PlaceDirection)
+            switch (item.PlaceDirection)
             {
 
                 case PlaceDirection.Horisontal:
                     {
-                        InsertWordHorisontal(word, placedWord.StartPoint);
+                        InsertWordHorisontal(word, item.StartPoint);
                         break;
                     }
                 case PlaceDirection.Vertiacal:
                     {
-                        InsertWordVertical(word, placedWord.StartPoint);
+                        InsertWordVertical(word, item.StartPoint);
                         break;
                     }
             }
 
-            PlacedWords.Push(placedWord);
+            PlacedWords.Push(item);
         }
 
         public void RemoveLastWord()

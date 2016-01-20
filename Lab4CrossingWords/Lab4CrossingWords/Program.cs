@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace Lab4CrossingWords
 {
@@ -10,13 +11,22 @@ namespace Lab4CrossingWords
         {
             var wordsList = new List<Word>
             {
-                new Word(1, "художник"),
-                new Word(2, "кисть"),
-                new Word(3, "мастер"),
-                new Word(4, "студия"),
+                //new Word(1, "художник"),
+                //new Word(2, "кисть"),
+                //new Word(3, "мастер"),
+                //new Word(4, "студия"),
+                //new Word(5, "пейзаж"),
+                //new Word(6, "палитра"),
+                //new Word(7, "мольберт")
+
+                new Word(1, "худ"),
+                new Word(2, "кис"),
+                new Word(3, "мeстер"),
+                new Word(4, "сту"),
                 new Word(5, "пейзаж"),
                 new Word(6, "палитра"),
                 new Word(7, "мольберт")
+
             };
 
             // raw cross posint infos
@@ -78,6 +88,34 @@ namespace Lab4CrossingWords
             else
             {
                 // go to deeper check
+
+                CrossWordsField field = new CrossWordsField(100,100, 7);
+
+                var words = new List<Word>(wordsList);
+
+                var res = false;
+                var attemts = 7;
+                while (!res && attemts !=0)
+                {
+                    res = field.ProcessWords(words, dick);
+
+
+                    if (res == false)
+                    {
+                        var first = wordsList.First();
+                        wordsList.Remove(first);
+                        wordsList.Add(first);
+                        words = new List<Word>(wordsList);
+                        attemts--;
+                    }
+
+                } 
+
+
+
+
+                    field.DrawMatrix();
+
             }
 
         
