@@ -4,6 +4,8 @@
 #include "stdafx.h"
 
 
+enum PlaceDirection { Horisontal , Vertiacal };
+
 
 int    A[] = { 1, 2, 3, 4, 5 }; //ну, к примеру...
 void Obrabotka(int *M, int n)

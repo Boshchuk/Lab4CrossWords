@@ -259,8 +259,7 @@ namespace Lab4CrossingWords
 
             return unicCrossPointInfos;
         }
-
-     
+        
 
         public static List<Word> Swap(int keya, int keyb, List<Word> words)
         {
