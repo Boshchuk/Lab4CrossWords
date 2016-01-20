@@ -38,6 +38,20 @@ namespace Lab4CrossingWords
             }
         }
 
+        public void ClearInternal()
+        {
+            PlacedWords.Clear();
+
+            for (var i = 0; i < DimX; i++)
+            {
+                for (var j = 0; j < DimY; j++)
+                {
+                    InternalMatrix[i, j].Symbol = DefSymbol;
+                    InternalMatrix[i, j].PlacedCount = 0;
+                }
+            }
+        }
+
         public void DrawMatrix()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -162,15 +176,22 @@ namespace Lab4CrossingWords
         {
             if (words.Count == 0)
             {
-                Console.WriteLine("all placed");
-                return true;
+                if (PlacedWords.Count == _wordsToInsert)
+                {
+                    Console.WriteLine("all placed");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             var wordToPlace = words.First();
 
             if (PlacedWords.Count == 0)
             {
-                InsertWord(wordToPlace, PlaceDirection.Horisontal, new Point(50,50));
+                InsertWord(wordToPlace, PlaceDirection.Horisontal, new Point(DimX/2,DimY/2));
 
                 var minusOne = words.Remove(wordToPlace);
                 return ProcessWords(words, dictionary);
@@ -262,7 +283,6 @@ namespace Lab4CrossingWords
                 PlaceDirection = direction
             };
 
-            // TODO: determenate Direction
             switch (item.PlaceDirection)
             {
 

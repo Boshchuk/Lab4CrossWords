@@ -38,10 +38,6 @@ namespace Lab4CrossingWords
             throw new ArgumentException();
         }
 
-        
-
-
-
 
         public int GetPairedCrossNum(int oneOfPairNum)
         {
