@@ -1,13 +1,3 @@
-// TestL4.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
-
-
-enum PlaceDirection { Horisontal , Vertiacal };
-
-
-int    A[] = { 1, 2, 3, 4, 5 }; //ну, к примеру...
 void Obrabotka(int *M, int n)
 {
 	for (int i = 0; i < n; i++)
@@ -38,10 +28,4 @@ void Perestanovki(int *M, int n, int N)//M - массив, n - число переставляемых эл
 								  //состояние для следующего обмена элементов
 		}
 	}
-}
-int main()
-{
-	Perestanovki(A, 7, 7);
-	system("pause");
-	return 0;
 }

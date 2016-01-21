@@ -1,1 +1,2 @@
-﻿#include "PlacedWord.h"
+﻿#include "stdafx.h"
+#include "PlacedWord.h"

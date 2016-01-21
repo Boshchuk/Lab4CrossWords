@@ -143,8 +143,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="Text.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CrossPointInfo.h" />
     <ClInclude Include="InternalChar.h" />
     <ClInclude Include="PlacedWord.h" />
     <ClInclude Include="Point.h" />
@@ -153,6 +155,7 @@
     <ClInclude Include="Word.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CrossPointInfo.cpp" />
     <ClCompile Include="InternalChar.cpp" />
     <ClCompile Include="PlacedWord.cpp" />
     <ClCompile Include="Point.cpp" />
@@ -162,7 +165,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestL4.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="Word.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

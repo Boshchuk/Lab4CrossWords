@@ -1,4 +1,5 @@
-﻿#include "Word.h"
+﻿#include "stdafx.h"
+#include "Word.h"
 
 
 Word::Word(int n, std::string str)
