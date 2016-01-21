@@ -258,28 +258,19 @@ namespace Lab4CrossingWords
 
             return unicCrossPointInfos;
         }
-        
 
         public static List<Word> Swap(int keya, int keyb, List<Word> words)
         {
             var t = new Word(words.FirstOrDefault(x => x.Number == keya).Number, words.FirstOrDefault(x => x.Number == keya).Text) ;
             Word b = words.FirstOrDefault(x => x.Number == keyb);
 
-
             var a = words.FirstOrDefault(x => x.Number == keya);
-
-
-            
-
 
             a.Text = b.Text;
             a.Number = b.Number;
 
-
-
             b.Text = t.Text;
             b.Number = t.Number;
-            
 
             return words;
         }

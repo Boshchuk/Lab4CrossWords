@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CrossPointInfo.h" />
+    <ClInclude Include="CrossWordsField.h" />
     <ClInclude Include="InternalChar.h" />
     <ClInclude Include="PlacedWord.h" />
     <ClInclude Include="Point.h" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossPointInfo.cpp" />
+    <ClCompile Include="CrossWordsField.cpp" />
     <ClCompile Include="InternalChar.cpp" />
     <ClCompile Include="PlacedWord.cpp" />
     <ClCompile Include="Point.cpp" />
