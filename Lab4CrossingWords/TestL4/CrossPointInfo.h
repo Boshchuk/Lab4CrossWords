@@ -13,6 +13,10 @@ public:
 	int W2Pos;
 
 public:
+
+	CrossPointInfo(int w1n, int w2n, char l, int w1pos, int w2pos);
+
+
 	bool IsSameWordsCross(CrossPointInfo toCheck);
 
 	std::string ToString();

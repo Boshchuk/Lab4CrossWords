@@ -6,6 +6,7 @@ public:
 	char Symbol;
 
 	InternalChar();
+	InternalChar(int c, char ch);
 	~InternalChar();
 };
 

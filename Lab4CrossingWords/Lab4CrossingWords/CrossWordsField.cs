@@ -121,8 +121,6 @@ namespace Lab4CrossingWords
 
         public bool CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
         {
-
-            // var 
             var pointToPlace = CulcStartPoint(placedWord, info, direction, word);
 
 

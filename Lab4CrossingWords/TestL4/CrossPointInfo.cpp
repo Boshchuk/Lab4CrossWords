@@ -2,6 +2,15 @@
 
 #include "CrossPointInfo.h"
 
+CrossPointInfo::CrossPointInfo(int w1n, int w2n, char l, int w1pos, int w2pos)
+{
+	W1Pos = w1pos;
+	W2Pos = w2pos;
+	Letter = l;
+	Word1Number = w1n;
+	Word2Number = w2n;
+}
+
 bool CrossPointInfo::IsSameWordsCross(CrossPointInfo toCheck)
 {
 	return (Word1Number == toCheck.Word1Number && Word2Number == toCheck.Word2Number);

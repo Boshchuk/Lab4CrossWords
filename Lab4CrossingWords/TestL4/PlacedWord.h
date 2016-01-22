@@ -6,10 +6,13 @@ enum PlaceDirection;
 
 class PlacedWord
 {
-	public:
-	Word Word;
-	PlaceDirection PlaceDirection;
+public:
+	Word _word;
+	PlaceDirection _placeDirection;
 	Point StartPoint;
 
-	//TODO ADD CONSTRUCTOR DESTRUCTOR
+public:
+	PlacedWord();
+	PlacedWord(Word word, PlaceDirection placeDirection, Point startPoint);
+	
 };

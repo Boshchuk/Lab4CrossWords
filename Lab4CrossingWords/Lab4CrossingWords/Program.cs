@@ -59,7 +59,7 @@ namespace Lab4CrossingWords
 
 
             // for words avalible crossong calc
-            var nList = wordsList.Select(x => x.Number);
+            IEnumerable<int> nList = wordsList.Select(x => x.Number);
 
             Dictionary<int, List<CrossPointInfo>> dick = new Dictionary<int, List<CrossPointInfo>>();
 

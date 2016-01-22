@@ -20,3 +20,8 @@
 
 
 // TODO: reference additional headers your program requires here
+enum PlaceDirection
+{
+	Horisontal,
+	Vertiacal
+};
