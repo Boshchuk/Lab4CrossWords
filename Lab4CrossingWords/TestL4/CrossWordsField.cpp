@@ -23,11 +23,11 @@ CrossWordsField::CrossWordsField(int dimX, int dimY, int wordsToInsert)
 
 void CrossWordsField::ClearInternal()
 {
-	PlacedWords.empty();
+	PlacedWords.clear();//    empty();
 
-	for (auto i = 0; i < DimX; i++)
+	for (int i = 0; i < DimX; i++)
 	{
-		for (auto j = 0; j < DimY; j++)
+		for (int j = 0; j < DimY; j++)
 		{
 			InternalMatrix[i][j].Symbol = DefSymbol;
 			InternalMatrix[i][j].PlacedCount = 0;
@@ -43,7 +43,7 @@ void CrossWordsField::DrawMatrix()
 
 		for (int j = 0; j < DimY; j++)
 		{
-			auto internalChar = InternalMatrix[i][j];
+			InternalChar internalChar = InternalMatrix[i][j];
 
 			if (internalChar.Symbol != DefSymbol)
 			{
@@ -67,9 +67,9 @@ void CrossWordsField::DrawMatrix()
 
 Point CrossWordsField::CulcStartPoint(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
 {
-	auto pointToPlace = Point();
+	Point pointToPlace = Point();
 
-	auto crossPoint = Point();
+	Point crossPoint = Point();
 
 	switch (placedWord._placeDirection)
 	{
@@ -107,18 +107,17 @@ Point CrossWordsField::CulcStartPoint(PlacedWord placedWord, CrossPointInfo info
 
 bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word)
 {
-	auto pointToPlace = CulcStartPoint(placedWord, info, direction, word);
-
-
-	auto result = true;
+	Point pointToPlace = CulcStartPoint(placedWord, info, direction, word);
+	
+	bool result = true;
 	switch (direction)
 	{
 	case Horisontal:
 	{
 		for (int index = 0; index < word.Text.length(); index++)
 		{
-			auto c = word.Text[index];
-			auto internalChar = InternalMatrix[pointToPlace.X + index][ pointToPlace.Y];
+			std::_Simple_types<char>::value_type c = word.Text[index];
+			InternalChar internalChar = InternalMatrix[pointToPlace.X + index][ pointToPlace.Y];
 
 			if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
 			{
@@ -136,8 +135,8 @@ bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, P
 	{
 		for (int index = 0; index < word.Text.length(); index++)
 		{
-			auto c = word.Text[index];
-			auto internalChar = InternalMatrix[pointToPlace.X][ pointToPlace.Y + index];
+			std::_Simple_types<char>::value_type c = word.Text[index];
+			InternalChar internalChar = InternalMatrix[pointToPlace.X][ pointToPlace.Y + index];
 
 			if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
 			{
@@ -156,6 +155,16 @@ bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, P
 	return result;
 }
 
+bool operator==(const CrossPointInfo lhs, const CrossPointInfo rhs)
+{
+	return lhs.Word1Number == rhs.Word1Number && lhs.Word2Number == rhs.Word2Number;
+}
+
+bool operator!=(const CrossPointInfo lhs, const CrossPointInfo rhs)
+{
+	return !(lhs == rhs);
+}
+
 bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::vector<CrossPointInfo>> dictionary)
 {
 	if (words.size() == 0)
@@ -172,46 +181,42 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 		}
 	}
 
-	auto wordToPlace = words.begin();
+	std::_Simple_types<Word>::value_type wordToPlace = words.front();
 
 	if (PlacedWords.size() == 0)
 	{
-		auto p = Point();
+		Point p = Point();
 		p.X = DimX / 2;
 		p.Y = DimY / 2;
-		InsertWord((*wordToPlace), Horisontal, p);
+		InsertWord(wordToPlace, Horisontal, p);
 
-		auto minusOne = words.erase(words.begin()); // TODO check
+		std::vector<Word>::iterator minusOne = words.erase(words.begin()); // TODO check
 		return ProcessWords(words, dictionary);
 	}
 	else
 	{
-		auto canPlace = false;
+		bool canPlace = false;
 
-		auto relatedInfos = dictionary[wordToPlace->Number];
+		std::map<int, std::vector<CrossPointInfo>>::mapped_type relatedInfos = dictionary.at(wordToPlace.Number);
 
-		auto attemptPlace = std::find_if(relatedInfos.begin(),
-			relatedInfos.end(),
+		std::_Vector_iterator<std::_Vector_val<std::_Simple_types<CrossPointInfo>>> attemptPlace = std::find_if(relatedInfos.begin(), relatedInfos.end(),
 			[&](const CrossPointInfo info)
 		{
-			return info.Word1Number == wordToPlace->Number || info.Word2Number == wordToPlace->Number;
+			return info.Word1Number == wordToPlace.Number || info.Word2Number == wordToPlace.Number;
 		});
 			
 			
 
-		if (attemptPlace != relatedInfos.end())
+		if ( attemptPlace != relatedInfos.end())
 		{
-			auto idOfWordToConnect = attemptPlace->GetPairedCrossNum(wordToPlace->Number);
+			int idOfWordToConnect = attemptPlace->GetPairedCrossNum(wordToPlace.Number);
 
-			auto placedToConnect = std::find_if(PlacedWords.begin(),
+			std::_List_iterator<std::_List_val<std::_List_simple_types<PlacedWord>>> placedToConnect = std::find_if(PlacedWords.begin(),
 				PlacedWords.end(),
 				[&](const PlacedWord word)
 			{
 				return word._word.Number == idOfWordToConnect;
 			});
-				
-				
-				//PlacedWords. FirstOrDefault(x = > x.Word.Number == idOfWordToConnect);
 
 			if (placedToConnect != PlacedWords.end())
 			{
@@ -230,16 +235,15 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 					break;
 				}
 				}
-				if (CanPlaceWord((*placedToConnect), (*attemptPlace), dir, (*wordToPlace)))
+				if (CanPlaceWord((*placedToConnect), (*attemptPlace), dir, (wordToPlace)))
 				{
 					canPlace = true;
-					auto startPoint = CulcStartPoint((*placedToConnect), (*attemptPlace), dir, (*wordToPlace));
-					InsertWord((*wordToPlace), dir, startPoint);
+					Point startPoint = CulcStartPoint((*placedToConnect), (*attemptPlace), dir, (wordToPlace));
+					InsertWord((wordToPlace), dir, startPoint);
 
-					auto minusOne = words.erase(words.begin());
+					std::vector<Word>::iterator minusOne = words.erase(words.begin());
 				}
 			}
-
 		}
 		else
 		{
@@ -248,8 +252,17 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 
 		if (!canPlace)
 		{
-			dictionary.erase(wordToPlace->Number);//   [wordToPlace->Number].erase(attemptPlace);// Remove(attemptPlace);
-			auto itr =words.erase(wordToPlace);
+		
+			std::vector<CrossPointInfo> vec = dictionary.at(wordToPlace.Number);
+	
+
+			vec.erase(std::remove_if(vec.begin(), vec.end(), [&](const CrossPointInfo info)
+			{
+				return (info.Word1Number == attemptPlace->Word1Number &&
+					    info.Word2Number == attemptPlace->Word2Number) ;
+			}));
+					
+			std::vector<Word>::iterator itr =words.erase(words.begin());
 			words.push_back(Word((*itr).Number,(*itr).Text));
 		}
 		return ProcessWords(words, dictionary);
@@ -258,7 +271,7 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 
 void CrossWordsField::InsertWord(Word word, PlaceDirection direction, Point startPoint)
 {
-	auto item = new PlacedWord(word, direction, startPoint);
+	PlacedWord *item = new PlacedWord(word, direction, startPoint);
 
 	switch (item->_placeDirection)
 	{
@@ -282,7 +295,7 @@ void CrossWordsField::InsertWordHorisontal(Word word, Point point)
 {
 	for (int index = 0; index < word.Text.length(); index++)
 	{
-		auto c = word.Text[index];
+		std::_Simple_types<char>::value_type c = word.Text[index];
 		InternalMatrix[point.X + index][ point.Y].Symbol = c;
 		InternalMatrix[point.X + index][ point.Y].PlacedCount++;
 	}
@@ -292,7 +305,7 @@ void CrossWordsField::InsertWordVertical(Word word, Point point)
 {
 	for (int index = 0; index < word.Text.length(); index++)
 	{
-		auto c = word.Text[index];
+		std::_Simple_types<char>::value_type c = word.Text[index];
 		InternalMatrix[point.X][ point.Y + index].Symbol = c;
 		InternalMatrix[point.X][ point.Y + index].PlacedCount++;
 	}

@@ -24,4 +24,5 @@ public:
 	int GetThisCross(int firstKey);
 
 	int GetPairedCrossNum(int oneOfPairNum);
+
 };

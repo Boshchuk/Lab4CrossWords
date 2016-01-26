@@ -14,13 +14,13 @@ namespace Lab4CrossingWords
         {
             var wordsList = new List<Word>
             {
-                //new Word(1, "художник"),
-                //new Word(2, "кисть"),
-                //new Word(3, "мастер"),
-                //new Word(4, "студия"),
-                //new Word(5, "пейзаж"),
-                //new Word(6, "палитра"),
-                //new Word(7, "мольберт")
+                new Word(1, "художник"),
+                new Word(2, "кисть"),
+                new Word(3, "мастер"),
+                new Word(4, "студия"),
+                new Word(5, "пейзаж"),
+                new Word(6, "палитра"),
+                new Word(7, "мольберт")
 
                 //new Word(1, "мольберт"),
                 //new Word(2, "мeстер"),
@@ -30,13 +30,13 @@ namespace Lab4CrossingWords
                 //new Word(6, "пейзаж"),
                 //new Word(7, "кис"),
 
-                new Word(1, "мольберт"),
-                new Word(2, "мeстер"),
-                new Word(3, "палитра"),
-                new Word(4, "сту"),
-                new Word(5, "худ"),
-                new Word(6, "пейзаж"),
-                new Word(7, "кис"),
+                //new Word(1, "мольберт"),
+                //new Word(2, "мeстер"),
+                //new Word(3, "палитра"),
+                //new Word(4, "сту"),
+                //new Word(5, "худ"),
+                //new Word(6, "пейзаж"),
+                //new Word(7, "кис"),
 
             };
 

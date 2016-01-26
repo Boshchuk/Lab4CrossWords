@@ -46,3 +46,5 @@ int CrossPointInfo::GetPairedCrossNum(int oneOfPairNum)
 		return Word1Number;
 	}
 }
+
+
