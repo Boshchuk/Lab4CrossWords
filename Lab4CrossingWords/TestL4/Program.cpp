@@ -4,7 +4,7 @@
 #include "Word.h"
 #include "CrossWordsField.h"
 #include "CrossPointInfo.h"
-
+#include <windows.h>
 
 static int count;
 
@@ -162,9 +162,38 @@ int main()
 {
 	setlocale(LC_ALL, "Russian"); // TODO: check
 
-
 	auto wordsList = std::vector <Word>();
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
+	
+
+	std::string mystr;
+	for (int i = 0; i < 7; i++)
+	{
+		std::cout << "¬ведите слово: ";
+		getline(std::cin, mystr);
+
+		wordsList.push_back(Word(i+1, mystr));
+	}
+
+	std::cout << "—лова: " << std::endl;
+
+	for (int i = 0; i < 7; i++)
+	{
+		std::cout << wordsList.at(i).Number << ". : " << wordsList.at(i).Text << std::endl;
+	}
+
+	/*
+	1. : худ
+	2. : персонаж
+	3. : слово
+	4. : кисть
+	5. : печенка
+	6. : ловкость
+	7. : качели
+
+	// work combo
 	wordsList.push_back(Word(1, "художник"));
 	wordsList.push_back(Word(2, "кисть"));
 	wordsList.push_back(Word(3, "мастер"));
@@ -172,6 +201,18 @@ int main()
 	wordsList.push_back(Word(5, "пейзаж"));
 	wordsList.push_back(Word(6, "палитра"));
 	wordsList.push_back(Word(7, "мольберт"));
+	*/
+
+	// not worked
+	/*wordsList.push_back(Word(1, "худ"));
+	wordsList.push_back(Word(2, "персонаж"));
+	wordsList.push_back(Word(3, "слово"));
+	wordsList.push_back(Word(4, "кисть"));
+	wordsList.push_back(Word(5, "печенка"));
+	wordsList.push_back(Word(6, "ловкость"));
+	wordsList.push_back(Word(7, "качели"));*/
+
+	
 
 	Perestanovki(wordsList, 7);
 

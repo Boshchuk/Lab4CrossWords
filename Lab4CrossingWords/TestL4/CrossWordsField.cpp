@@ -205,7 +205,6 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 			return info.Word1Number == wordToPlace.Number || info.Word2Number == wordToPlace.Number;
 		});
 			
-			
 
 		if ( attemptPlace != relatedInfos.end())
 		{
@@ -255,13 +254,20 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 		
 			std::vector<CrossPointInfo> vec = dictionary.at(wordToPlace.Number);
 	
-
-			vec.erase(std::remove_if(vec.begin(), vec.end(), [&](const CrossPointInfo info)
+			
+			auto result = std::remove_if(vec.begin(), vec.end(), [&](const CrossPointInfo info)
 			{
 				return (info.Word1Number == attemptPlace->Word1Number &&
-					    info.Word2Number == attemptPlace->Word2Number) ;
-			}));
-					
+					info.Word2Number == attemptPlace->Word2Number);
+			});
+
+			if (result == vec.end())
+			{
+				return false;
+			}
+
+			vec.erase(result);
+			dictionary.at(wordToPlace.Number) = vec;
 			std::vector<Word>::iterator itr =words.erase(words.begin());
 			words.push_back(Word((*itr).Number,(*itr).Text));
 		}
