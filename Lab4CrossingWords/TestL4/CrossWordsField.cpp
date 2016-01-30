@@ -109,6 +109,17 @@ bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, P
 {
 	Point pointToPlace = CulcStartPoint(placedWord, info, direction, word);
 	
+	bool eculimint = false;
+
+	int ecuCount = 0;
+	if (placedWord._word.Text == word.Text)
+	{
+		eculimint = true;
+	}
+
+
+
+
 	bool result = true;
 	switch (direction)
 	{
@@ -121,6 +132,14 @@ bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, P
 
 			if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
 			{
+				if (internalChar.Symbol == c)
+				{
+					ecuCount++;
+				}
+				if (eculimint && ecuCount >1)
+				{
+					result = false;
+				}
 				continue;
 			}
 			else
@@ -140,6 +159,15 @@ bool CrossWordsField::CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, P
 
 			if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
 			{
+				if (internalChar.Symbol == c)
+				{
+					ecuCount++;
+				}
+				
+				if (eculimint && ecuCount >1)
+				{
+					result = false;
+				}
 				continue;
 			}
 			else
@@ -261,10 +289,10 @@ bool CrossWordsField::ProcessWords(std::vector<Word> words, std::map<int, std::v
 					info.Word2Number == attemptPlace->Word2Number);
 			});
 
-			if (result == vec.end())
+		/*	if (result == vec.end())
 			{
 				return false;
-			}
+			}*/
 
 			vec.erase(result);
 			dictionary.at(wordToPlace.Number) = vec;

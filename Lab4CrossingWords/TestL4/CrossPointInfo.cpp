@@ -13,7 +13,9 @@ CrossPointInfo::CrossPointInfo(int w1n, int w2n, char l, int w1pos, int w2pos)
 
 bool CrossPointInfo::IsSameWordsCross(CrossPointInfo toCheck)
 {
-	return (Word1Number == toCheck.Word1Number && Word2Number == toCheck.Word2Number);
+	return (Word1Number == toCheck.Word1Number 
+			&& Word2Number == toCheck.Word2Number 
+			&& Letter == toCheck.Letter );
 }
 
 std::string CrossPointInfo::ToString()

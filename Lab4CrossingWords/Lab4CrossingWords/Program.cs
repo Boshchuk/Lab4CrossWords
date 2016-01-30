@@ -14,14 +14,24 @@ namespace Lab4CrossingWords
         {
             var wordsList = new List<Word>
             {
-                new Word(1, "художник"),
-                new Word(2, "кисть"),
-                new Word(3, "мастер"),
-                new Word(4, "студия"),
-                new Word(5, "пейзаж"),
-                new Word(6, "палитра"),
-                new Word(7, "мольберт")
+                //new Word(1, "художник"),
+                //new Word(2, "кисть"),
+                //new Word(3, "мастер"),
+                //new Word(4, "студия"),
+                //new Word(5, "пейзаж"),
+                //new Word(6, "палитра"),
+                //new Word(7, "мольберт")
 
+                //     new Word(1, "сон"),
+                //new Word(2, "сон"),
+                //new Word(3, "сон"),
+                //new Word(4, "сон"),
+                //new Word(5, "сон"),
+                //new Word(6, "сон"),
+                //new Word(7, "сон")
+
+
+                // stack
                 //new Word(1, "мольберт"),
                 //new Word(2, "мeстер"),
                 //new Word(3, "палитра"),
@@ -37,6 +47,23 @@ namespace Lab4CrossingWords
                 //new Word(5, "худ"),
                 //new Word(6, "пейзаж"),
                 //new Word(7, "кис"),
+
+                new Word(1, "худ"),
+                new Word(2, "персонаж"),
+                new Word(3, "слово"),
+                new Word(4, "кисть"),
+                new Word(5, "печенка"),
+                new Word(6, "ловкость"),
+                new Word(7, "качели"),
+
+                /*wordsList.push_back(Word(1, "худ"));
+wordsList.push_back(Word(2, "персонаж"));
+wordsList.push_back(Word(3, "слово"));
+wordsList.push_back(Word(4, "кисть"));
+wordsList.push_back(Word(5, "печенка"));
+wordsList.push_back(Word(6, "ловкость"));
+wordsList.push_back(Word(7, "качели"));*/
+
 
             };
 
@@ -53,7 +80,7 @@ namespace Lab4CrossingWords
 
             foreach (var crossPointInfo in crossPointInfos)
             {
-                Console.WriteLine(crossPointInfo.ToString()); 
+              //  Console.WriteLine(crossPointInfo.ToString()); 
             }
             // end
 
@@ -76,7 +103,7 @@ namespace Lab4CrossingWords
 
                 foreach (var crossPointInfo in res)
                 {
-                    Console.WriteLine(crossPointInfo.ToString());
+                  //  Console.WriteLine(crossPointInfo.ToString());
                 }
 
                 Console.WriteLine();
@@ -92,7 +119,7 @@ namespace Lab4CrossingWords
 
             foreach (var crossPointInfo in differecntCross)
             {
-                Console.WriteLine(crossPointInfo.ToString());
+//Console.WriteLine(crossPointInfo.ToString());
             }
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -102,7 +129,7 @@ namespace Lab4CrossingWords
 
             if (differecntCross.Count < 7 - 1)
             {
-                Console.WriteLine("Can't build");
+             //   Console.WriteLine("Can't build");
             }
             else
             {
@@ -118,9 +145,9 @@ namespace Lab4CrossingWords
                 var attemts = count-1;
                 while (!res && attemts !=0)
                 {
-                    res = field.ProcessWords(words, d);
+                   // res = field.ProcessWords(words, d);
 
-
+                    res = field.ProcessWords2(words);
                     if (res == false)
                     {
                         

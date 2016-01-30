@@ -8,6 +8,8 @@ namespace Lab4CrossingWords
     // We belave on tis unblimited size
     public class CrossWordsField
     {
+        private int swapcount;
+
         private readonly int _wordsToInsert;
         private const char DefSymbol = '*';
 
@@ -169,6 +171,206 @@ namespace Lab4CrossingWords
 
             return result;
         }
+
+        public void InsertWord(CanPlace place, Word word)
+        {
+            if (place.CanTop)
+            {
+                InsertWord(word, PlaceDirection.Vertiacal, place.TopStart);
+            }
+            if (place.CanLeft)
+            {
+                InsertWord(word, PlaceDirection.Horisontal, place.LeftStart);
+            }
+        }
+
+        public CanPlace CanPlaceToCrossPos(Cross crossPos, Word word)
+        {
+            Point shitTop = new Point(crossPos.Point.X, crossPos.Point.Y - word.Text.IndexOf(crossPos.Symbol));
+            Point shitLeft = new Point(crossPos.Point.X- word.Text.IndexOf(crossPos.Symbol), crossPos.Point.Y );
+
+            var canTop = true;
+            var canLeft = true;
+
+            var topCrossingCount = 0;
+            var leftCrossingCount = 0;
+
+            // try top
+            for (int index = 0; index < word.Text.Length; index++)
+            {
+                var c = word.Text[index];
+                var internalChar = InternalMatrix[shitTop.X , shitTop.Y + index];
+
+                if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
+                {
+                    if (internalChar.Symbol == c)
+                    {
+                        topCrossingCount++;
+                    }
+                    if (topCrossingCount > 1)
+                    {
+                        canTop = false;
+                        break;
+                    }
+
+                    continue;
+                }
+                else
+                {
+                    canTop = false;
+                    break;
+                }
+            }
+
+            for (int index = 0; index < word.Text.Length; index++)
+            {
+                var c = word.Text[index];
+                var internalChar = InternalMatrix[shitLeft.X + index, shitLeft.Y];
+
+                if ((internalChar.Symbol == DefSymbol) || (internalChar.Symbol == c))
+                {
+                    if (internalChar.Symbol == c)
+                    {
+                        leftCrossingCount++;
+                    }
+                    if (leftCrossingCount > 1)
+                    {
+                        canLeft = false;
+                        break;
+                    }
+                    continue;
+                }
+                else
+                {
+                    canLeft = false;
+                    break;
+                }
+            }
+            return new CanPlace() {CanLeft = canLeft, CanTop = canTop, LeftStart = shitLeft,TopStart = shitTop};
+        }
+
+        public List<Cross> CrossPositions(Word word)
+        {
+            bool result = false;
+
+            bool pointToInsertExist = false;
+
+            var avalible = new List< Cross>();
+
+            for (int i = 0; i < DimX; i++)
+            {
+                for (int j = 0; j < DimY; j++)
+                {
+
+                    foreach (var c in word.Text)
+                    {
+                        if (c == InternalMatrix[i, j].Symbol && InternalMatrix[i, j].PlacedCount <= 1)
+                        {
+                            pointToInsertExist = true;
+                            avalible.Add(new Cross()
+                            {
+                                Point = new Point(i, j) ,
+                                Symbol = c
+                            });
+                        }
+                    }
+                }
+            }
+
+
+
+            return avalible;
+        }
+
+        public bool ProcessWords2(List<Word> words)
+        {
+            if (words.Count == 0)
+            {
+                if (PlacedWords.Count == _wordsToInsert)
+                {
+                    Console.WriteLine("all placed");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            var wordToPlace = words.First();
+
+            if (PlacedWords.Count == 0)
+            {
+                InsertWord(wordToPlace, PlaceDirection.Horisontal, new Point(DimX / 2, DimY / 2));
+
+                words.Remove(wordToPlace);
+                return ProcessWords2(words);
+            }
+            else
+            {
+                var canPlace = false;
+                var next = words.FirstOrDefault();
+
+                var avalibelePos = CrossPositions(next);
+
+                if (avalibelePos.Count == 0)
+                {
+                    if (swapcount >=7)
+                    {
+                        return false;
+                    }
+
+                    words.Remove(next);
+                    words.Add(next);
+                    swapcount++;
+                }
+                else
+                {
+                  
+                        // try insert
+                        var result = false;
+
+
+                            while (result == false)
+                            {
+                                var f = avalibelePos.FirstOrDefault();
+
+                                if (f == null)
+                                {
+                                    break;
+                                }
+
+                                var cPos = CanPlaceToCrossPos(f, next);
+
+                                if (cPos.Posible)
+                                {
+                                  InsertWord(cPos, next);
+
+                                  words.Remove(next);
+
+                                  result = true;
+                                }
+                                else
+                                {
+                                    avalibelePos.Remove(f);
+                                    result = false;
+                                }
+                                
+                            }
+
+                        if (!result)
+                        {
+                            RemoveLastWord();
+                            words.Remove(next);
+                            words.Add(next);
+                        }
+                }
+
+                return ProcessWords2(words);
+            }
+
+        }
+
 
         public bool ProcessWords(List<Word> words, Dictionary<int, List<CrossPointInfo>> dictionary)
         {

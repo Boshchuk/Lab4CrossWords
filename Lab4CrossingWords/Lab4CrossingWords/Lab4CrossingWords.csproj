@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanPlace.cs" />
+    <Compile Include="Cross.cs" />
     <Compile Include="CrossPointInfo.cs" />
     <Compile Include="CrossWordsField.cs" />
     <Compile Include="InternalChar.cs" />

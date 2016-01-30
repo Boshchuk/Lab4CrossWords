@@ -168,21 +168,21 @@ int main()
 
 	
 
-	std::string mystr;
-	for (int i = 0; i < 7; i++)
-	{
-		std::cout << "Введите слово: ";
-		getline(std::cin, mystr);
+	//std::string mystr;
+	//for (int i = 0; i < 7; i++)
+	//{
+	//	std::cout << "Введите слово: ";
+	//	getline(std::cin, mystr);
 
-		wordsList.push_back(Word(i+1, mystr));
-	}
+	//	wordsList.push_back(Word(i+1, mystr));
+	//}
 
-	std::cout << "Слова: " << std::endl;
+	//std::cout << "Слова: " << std::endl;
 
-	for (int i = 0; i < 7; i++)
-	{
-		std::cout << wordsList.at(i).Number << ". : " << wordsList.at(i).Text << std::endl;
-	}
+	//for (int i = 0; i < 7; i++)
+	//{
+	//	std::cout << wordsList.at(i).Number << ". : " << wordsList.at(i).Text << std::endl;
+	//}
 
 	/*
 	1. : худ
@@ -212,7 +212,13 @@ int main()
 	wordsList.push_back(Word(6, "ловкость"));
 	wordsList.push_back(Word(7, "качели"));*/
 
-	
+	wordsList.push_back(Word(1, "сон"));
+	wordsList.push_back(Word(2, "сон"));
+	wordsList.push_back(Word(3, "сон"));
+	wordsList.push_back(Word(4, "сон"));
+	wordsList.push_back(Word(5, "сон"));
+	wordsList.push_back(Word(6, "сон"));
+	wordsList.push_back(Word(7, "сон"));
 
 	Perestanovki(wordsList, 7);
 
@@ -224,6 +230,7 @@ int main()
 
 	for (int i = 1; i < 8; i ++)
 	{
+		//todo check here
 		std::vector<CrossPointInfo> res = GetRelatedForWord(i, crossPointInfos);
 
 		dick.insert(std::pair<int, std::vector<CrossPointInfo>>(i, res));
