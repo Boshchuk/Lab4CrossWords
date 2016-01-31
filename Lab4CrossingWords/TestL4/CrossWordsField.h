@@ -3,8 +3,6 @@
 #include "InternalChar.h"
 #include <stack>
 #include <vector>
-#include <map>
-#include <list>
 #include "Cross.h"
 
 
@@ -27,11 +25,7 @@ private:
 
 public:
 	CrossWordsField(int dimX, int dimY, int wordsToInsert);
-	void ClearInternal();
 	void DrawMatrix();
-	Point CulcStartPoint(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word);
-	bool CanPlaceWord(PlacedWord placedWord, CrossPointInfo info, PlaceDirection direction, Word word);
-	bool ProcessWords(std::vector<Word> words, std::map<int, std::vector<CrossPointInfo>> dictionary);
 	bool ProcessWordsBackTrack(std::vector<Word> words);
 
 	void InsertWord(Word word, PlaceDirection direction, Point startPoint);

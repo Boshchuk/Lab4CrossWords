@@ -37,9 +37,6 @@
     <ClInclude Include="Point.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="CrossPointInfo.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="CrossWordsField.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -64,9 +61,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CrossPointInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Program.cpp">

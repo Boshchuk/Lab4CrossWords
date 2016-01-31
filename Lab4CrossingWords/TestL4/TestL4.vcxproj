@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClInclude Include="CanPlace.h" />
     <ClInclude Include="Cross.h" />
-    <ClInclude Include="CrossPointInfo.h" />
     <ClInclude Include="CrossWordsField.h" />
     <ClInclude Include="InternalChar.h" />
     <ClInclude Include="PlacedWord.h" />
@@ -160,7 +159,6 @@
   <ItemGroup>
     <ClCompile Include="CanPlace.cpp" />
     <ClCompile Include="Cross.cpp" />
-    <ClCompile Include="CrossPointInfo.cpp" />
     <ClCompile Include="CrossWordsField.cpp" />
     <ClCompile Include="InternalChar.cpp" />
     <ClCompile Include="PlacedWord.cpp" />
