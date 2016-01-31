@@ -184,14 +184,14 @@ int main()
 	//	std::cout << wordsList.at(i).Number << ". : " << wordsList.at(i).Text << std::endl;
 	//}
 
-	/*
-	1. : худ
+	
+	/*1. : худ
 	2. : персонаж
 	3. : слово
 	4. : кисть
 	5. : печенка
 	6. : ловкость
-	7. : качели
+	7. : качели*/
 
 	// work combo
 	wordsList.push_back(Word(1, "художник"));
@@ -201,66 +201,52 @@ int main()
 	wordsList.push_back(Word(5, "пейзаж"));
 	wordsList.push_back(Word(6, "палитра"));
 	wordsList.push_back(Word(7, "мольберт"));
-	*/
+	
 
 	// not worked
-	/*wordsList.push_back(Word(1, "худ"));
-	wordsList.push_back(Word(2, "персонаж"));
-	wordsList.push_back(Word(3, "слово"));
-	wordsList.push_back(Word(4, "кисть"));
-	wordsList.push_back(Word(5, "печенка"));
-	wordsList.push_back(Word(6, "ловкость"));
-	wordsList.push_back(Word(7, "качели"));*/
+	//wordsList.push_back(Word(1, "худ"));
+	//wordsList.push_back(Word(2, "персонаж"));
+	//wordsList.push_back(Word(3, "слово"));
+	//wordsList.push_back(Word(4, "кисть"));
+	//wordsList.push_back(Word(5, "печенка"));
+	//wordsList.push_back(Word(6, "ловкость"));
+	//wordsList.push_back(Word(7, "качели"));
 
-	wordsList.push_back(Word(1, "сон"));
+	/*wordsList.push_back(Word(1, "сон"));
 	wordsList.push_back(Word(2, "сон"));
 	wordsList.push_back(Word(3, "сон"));
 	wordsList.push_back(Word(4, "сон"));
 	wordsList.push_back(Word(5, "сон"));
 	wordsList.push_back(Word(6, "сон"));
-	wordsList.push_back(Word(7, "сон"));
+	wordsList.push_back(Word(7, "сон"));*/
 
-	Perestanovki(wordsList, 7);
+	//Perestanovki(wordsList, 7);
 
-	std::cout << count << std::endl;
+	//std::cout << count << std::endl;
 
-	std::vector<CrossPointInfo> crossPointInfos = GetCrossPointInfos(wordsList);
+	//std::vector<CrossPointInfo> crossPointInfos = GetCrossPointInfos(wordsList);
 
-	std::map<int, std::vector<CrossPointInfo>> dick = std::map<int, std::vector<CrossPointInfo>>();
+	//std::map<int, std::vector<CrossPointInfo>> dick = std::map<int, std::vector<CrossPointInfo>>();
 
-	for (int i = 1; i < 8; i ++)
-	{
-		//todo check here
-		std::vector<CrossPointInfo> res = GetRelatedForWord(i, crossPointInfos);
+	//for (int i = 1; i < 8; i ++)
+	//{
+	//	//todo check here
+	//	std::vector<CrossPointInfo> res = GetRelatedForWord(i, crossPointInfos);
 
-		dick.insert(std::pair<int, std::vector<CrossPointInfo>>(i, res));
-	}
-	
+	//	dick.insert(std::pair<int, std::vector<CrossPointInfo>>(i, res));
+	//}
+	//
 	CrossWordsField field = CrossWordsField(50, 50, 7);
 
 	std::vector<Word> words = std::vector<Word>(wordsList);
-	std::map<int, std::vector<CrossPointInfo>> d = std::map<int, std::vector<CrossPointInfo>>(dick);
+	//std::map<int, std::vector<CrossPointInfo>> d = std::map<int, std::vector<CrossPointInfo>>(dick);
 
 
-	bool res = false;
-	int attemts = count - 1;
-	while (!res && attemts != 0)
-	{
-		res = field.ProcessWords(words, d);
+	bool res =  field.ProcessWordsBackTrack (words);
 
-		if (res == false)
-		{
-		    words = combinations[attemts];
 
-			d = std::map<int, std::vector<CrossPointInfo>>(dick);
 
-			field.ClearInternal();
-			attemts--;
-		}
-
-	}
-
-	if (attemts == 0 && res == false)
+	if (res == false)
 	{
 		std::cout << "cant" << std::endl;
 	}

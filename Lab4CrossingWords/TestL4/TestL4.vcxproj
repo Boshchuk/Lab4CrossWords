@@ -146,6 +146,8 @@
     <Text Include="Text.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CanPlace.h" />
+    <ClInclude Include="Cross.h" />
     <ClInclude Include="CrossPointInfo.h" />
     <ClInclude Include="CrossWordsField.h" />
     <ClInclude Include="InternalChar.h" />
@@ -156,6 +158,8 @@
     <ClInclude Include="Word.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CanPlace.cpp" />
+    <ClCompile Include="Cross.cpp" />
     <ClCompile Include="CrossPointInfo.cpp" />
     <ClCompile Include="CrossWordsField.cpp" />
     <ClCompile Include="InternalChar.cpp" />

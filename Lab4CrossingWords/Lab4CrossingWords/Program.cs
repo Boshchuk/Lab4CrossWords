@@ -14,6 +14,15 @@ namespace Lab4CrossingWords
         {
             var wordsList = new List<Word>
             {
+
+                new Word(1, "снег"),
+                new Word(2, "лопата"),
+                new Word(3, "печенье"),
+                new Word(4, "ппровыоо"),
+                new Word(5, "слово"),
+                new Word(6, "бук"),
+                new Word(7, "море")
+
                 //new Word(1, "художник"),
                 //new Word(2, "кисть"),
                 //new Word(3, "мастер"),
@@ -48,13 +57,13 @@ namespace Lab4CrossingWords
                 //new Word(6, "пейзаж"),
                 //new Word(7, "кис"),
 
-                new Word(1, "худ"),
-                new Word(2, "персонаж"),
-                new Word(3, "слово"),
-                new Word(4, "кисть"),
-                new Word(5, "печенка"),
-                new Word(6, "ловкость"),
-                new Word(7, "качели"),
+                //new Word(1, "худ"),
+                //new Word(2, "персонаж"),
+                //new Word(3, "слово"),
+                //new Word(4, "кисть"),
+                //new Word(5, "печенка"),
+                //new Word(6, "ловкость"),
+                //new Word(7, "качели"),
 
                 /*wordsList.push_back(Word(1, "худ"));
 wordsList.push_back(Word(2, "персонаж"));
@@ -143,31 +152,32 @@ wordsList.push_back(Word(7, "качели"));*/
 
                 var res = false;
                 var attemts = count-1;
-                while (!res && attemts !=0)
+               // while (!res && attemts !=0)
                 {
                    // res = field.ProcessWords(words, d);
 
                     res = field.ProcessWords2(words);
-                    if (res == false)
-                    {
+                    //if (res == false)
+                    //{
                         
 
-                        //var first = wordsList.First();
-                        //wordsList.Remove(first);
-                        //wordsList.Add(first);
-                        //words = new List<Word>(wordsList);
+                    //    //var first = wordsList.First();
+                    //    //wordsList.Remove(first);
+                    //    //wordsList.Add(first);
+                    //    //words = new List<Word>(wordsList);
 
-                        words = combinations[attemts];
+                    //    words = combinations[attemts];
 
-                        d = new Dictionary<int, List<CrossPointInfo>>(dick);
+                    //    d = new Dictionary<int, List<CrossPointInfo>>(dick);
 
-                        field.ClearInternal();
-                        attemts--;
-                    }
+                    //    field.ClearInternal();
+                    //    attemts--;
+                    //}
 
                 }
 
-                if (attemts == 0 && res == false)
+                //  if (attemts == 0 && res == false)
+                if (res == false)
                 {
                     Console.WriteLine("Низя");
                 }

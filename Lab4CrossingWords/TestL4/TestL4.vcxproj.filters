@@ -43,6 +43,12 @@
     <ClInclude Include="CrossWordsField.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cross.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CanPlace.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -67,6 +73,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CrossWordsField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cross.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CanPlace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

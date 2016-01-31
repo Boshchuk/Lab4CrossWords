@@ -276,9 +276,7 @@ namespace Lab4CrossingWords
                     }
                 }
             }
-
-
-
+            
             return avalible;
         }
 
@@ -308,62 +306,65 @@ namespace Lab4CrossingWords
             }
             else
             {
-                var canPlace = false;
                 var next = words.FirstOrDefault();
 
                 var avalibelePos = CrossPositions(next);
 
                 if (avalibelePos.Count == 0)
                 {
-                    if (swapcount >=7)
+                    if (swapcount >= _wordsToInsert + 1)
                     {
                         return false;
                     }
 
-                    words.Remove(next);
-                    words.Add(next);
                     swapcount++;
+
+                    var inseted = RemoveLastWord().Word;
+
+                    words.Add(inseted);
+
+                    return ProcessWords2(words);
                 }
                 else
                 {
-                  
-                        // try insert
-                        var result = false;
+
+                    // try insert
+                    var result = false;
 
 
-                            while (result == false)
-                            {
-                                var f = avalibelePos.FirstOrDefault();
+                    while (result == false)
+                    {
+                        var f = avalibelePos.FirstOrDefault();
 
-                                if (f == null)
-                                {
-                                    break;
-                                }
-
-                                var cPos = CanPlaceToCrossPos(f, next);
-
-                                if (cPos.Posible)
-                                {
-                                  InsertWord(cPos, next);
-
-                                  words.Remove(next);
-
-                                  result = true;
-                                }
-                                else
-                                {
-                                    avalibelePos.Remove(f);
-                                    result = false;
-                                }
-                                
-                            }
-
-                        if (!result)
+                        if (f == null)
                         {
-                            RemoveLastWord();
-                            words.Remove(next);
-                            words.Add(next);
+                            break;
                         }
+
+                        var cPos = CanPlaceToCrossPos(f, next);
+
+                        if (cPos.Posible)
+                        {
+                            InsertWord(cPos, next);
+
+                            words.Remove(next);
+
+                            result = true;
+                        }
+                        else
+                        {
+                            avalibelePos.Remove(f);
+                            result = false;
+                        }
+
+                    }
+
+                    if (!result)
+                    {
+                        RemoveLastWord();
+                        words.Remove(next);
+                        words.Add(next);
+                    }
                 }
 
                 return ProcessWords2(words);
@@ -501,9 +502,9 @@ namespace Lab4CrossingWords
             PlacedWords.Push(item);
         }
 
-        public void RemoveLastWord()
+        public PlacedWord RemoveLastWord()
         {
-            var placedWord = PlacedWords.Pop();
+            PlacedWord placedWord = PlacedWords.Pop();
 
             switch (placedWord.PlaceDirection)
             {
@@ -536,6 +537,7 @@ namespace Lab4CrossingWords
                         break;
                     }
             }
+            return placedWord;
         }
     }
 }
